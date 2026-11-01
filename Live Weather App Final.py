@@ -98,9 +98,9 @@ DEFAULT_CITY_LOCATIONS = {
 
 # The same file can run in two modes:
 
-#   python weather_dashboard_15min.py             -> dashboard + schedule setup
+#   python weather_dashboard_hourly.py             -> dashboard + schedule setup
 
-#   python weather_dashboard_15min.py --background -> collect and exit
+#   python weather_dashboard_hourly.py --background -> collect and exit
 
 #
 
@@ -238,7 +238,7 @@ def collect_weather_without_dashboard():
 
 def install_windows_scheduled_task():
 
-    """Register this same file to collect weather every 1 hour."""
+    """Register this same file to collect weather every 60 minutes (1 hour)."""
 
     if sys.platform != "win32":
 
@@ -284,7 +284,7 @@ def install_windows_scheduled_task():
 
                 "Windows scheduled task is installed/updated: "
 
-                "weather will be collected every 1 hour even when "
+                "weather will be collected every 60 minutes (1 hour) even when "
 
                 "the dashboard is closed."
 
@@ -798,7 +798,8 @@ for city, latitude, longitude in saved_city_locations:
 
 # CSV/database paths; startup itself does not save observations.
 
-refresh_interval = 60 * 60 * 1000
+REFRESH_INTERVAL_MINUTES = 60
+refresh_interval = REFRESH_INTERVAL_MINUTES * 60 * 1000
 
 city_locations = [
 
